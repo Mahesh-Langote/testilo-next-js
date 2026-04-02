@@ -1,0 +1,13 @@
+.questionsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.stats {
+  display: flex;
+  gap: 1.5rem;
+  color: #666;
+  font-weight: 500;
+}

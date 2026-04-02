@@ -1,0 +1,98 @@
+.reviewView {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.summaryCard {
+  padding: 3rem;
+  text-align: center;
+}
+
+.summaryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.scoreMain h2 {
+  font-size: 3rem;
+  margin: 0;
+}
+
+.summaryMeta {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  color: #666;
+  border-top: 1px solid #eee;
+  padding-top: 1.5rem;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.questionReview {
+  padding: 2rem;
+}
+
+.qHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.correctnessLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+}
+
+.correctnessLabel.correct {
+  color: var(--success);
+}
+
+.correctnessLabel.incorrect {
+  color: var(--error);
+}
+
+.qText {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.qResponse {
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.correctAnswer {
+  color: var(--success);
+  margin-top: 0.5rem;
+}
+
+.explanation {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed #ccc;
+  font-style: italic;
+  color: #666;
+}
+
+.footerActions {
+  text-align: center;
+  margin-top: 2rem;
+}

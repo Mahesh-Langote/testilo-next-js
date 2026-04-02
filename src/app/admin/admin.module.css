@@ -1,0 +1,89 @@
+.adminLayout {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--bg-light);
+}
+
+.sidebar {
+  width: 250px;
+  background-color: var(--bg-dark);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.sidebarLogo {
+  padding: 2rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.logoText {
+  color: var(--primary);
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.sidebarNav {
+  padding: 1rem 0;
+  flex: 1;
+}
+
+.sidebarNav ul {
+  list-style: none;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  gap: 12px;
+  transition: all 0.2s;
+  color: rgba(255,255,255,0.7);
+}
+
+.navItem:hover {
+  background-color: rgba(255,255,255,0.05);
+  color: white;
+}
+
+.navItem.active {
+  background-color: var(--primary);
+  color: white;
+}
+
+.sidebarFooter {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding: 1rem 0;
+}
+
+.logout {
+  color: #ff4757;
+}
+
+.adminContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.adminHeader {
+  background: white;
+  padding: 1rem 2rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.contentInner {
+  padding: 2rem;
+  flex: 1;
+}
+
+.testName {
+  font-weight: 600;
+  color: #666;
+}

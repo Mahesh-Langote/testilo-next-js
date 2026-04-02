@@ -1,0 +1,108 @@
+.dashboardView h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--bg-dark);
+}
+
+.welcome p {
+  color: #666;
+  max-width: 800px;
+  margin-bottom: 3rem;
+}
+
+.tasksGrid h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #444;
+}
+
+.tasksList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 4rem;
+}
+
+.taskCard {
+  display: flex;
+  align-items: flex-start;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  gap: 1.5rem;
+  transition: transform 0.2s;
+}
+
+.taskCard:hover {
+  transform: translateX(5px);
+  border-color: var(--primary);
+}
+
+.taskNumber {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ccc;
+  width: 30px;
+}
+
+.taskIcon {
+  color: var(--primary);
+  padding: 10px;
+  background: rgba(243, 156, 18, 0.1);
+  border-radius: 10px;
+}
+
+.critical {
+  border-left: 5px solid var(--error);
+}
+
+.taskInfo h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.taskInfo p {
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.taskLink {
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.utilsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.utilCard {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  gap: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.utilCard:hover {
+  background: #f9f9f9;
+  box-shadow: var(--shadow);
+}
+
+.utilCard h3 {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.utilCard p {
+  font-size: 0.85rem;
+  color: #888;
+}

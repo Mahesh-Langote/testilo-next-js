@@ -1,0 +1,37 @@
+.studentLayout {
+  min-height: 100vh;
+  background-color: var(--bg-light);
+  display: flex;
+  flex-direction: column;
+}
+
+.studentHeader {
+  padding: 2rem 0;
+  color: white;
+  background-color: var(--bg-dark);
+}
+
+.headerInner {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.testTitle {
+  font-size: 2.5rem;
+  letter-spacing: -1.5px;
+}
+
+.studentMain {
+  flex: 1;
+  padding: 3rem 0;
+}
+
+/* Theme overrides */
+/* Since these depend on a parent class, we use :global or just standard nesting if supported by the module loader, 
+   but for CSS modules, it's better to use dynamic class names in JS or :global if we must. 
+   I'll use dynamic class names for simplicity. */
+
+.headerCorporate { background-color: #2c3e50; }
+.headerCrimson { background-color: #c0392b; }
+.headerGenghis { background-color: #f39c12; }

@@ -1,0 +1,145 @@
+.publishView h1 {
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.publishStatus {
+  padding: 3rem;
+  margin-bottom: 3rem;
+}
+
+.statusHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.statusIndicator {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.statusIndicatorPublished {
+  color: var(--success);
+}
+
+.statusIndicatorDraft {
+  color: #f39c12;
+}
+
+.btnPublish {
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btnGreen {
+  background-color: var(--success);
+  color: white;
+}
+
+.btnGreen:hover {
+  background-color: #219150;
+  transform: scale(1.05);
+}
+
+.btnGreen:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btnRed {
+  background-color: var(--error);
+  color: white;
+}
+
+.btnRed:hover {
+  background-color: #c0392b;
+  transform: scale(1.05);
+}
+
+.urlContainer {
+  margin-top: 2rem;
+  border-top: 1px solid #eee;
+  padding-top: 2rem;
+}
+
+.urlBox {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.urlBox input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background: #f9f9f9;
+  font-weight: 600;
+  font-family: monospace;
+}
+
+.urlBox a {
+  color: var(--primary);
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  display: flex;
+}
+
+.warningBox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--error);
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+.exportSection h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.exportGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.exportCard {
+  display: flex;
+  padding: 1.5rem;
+  gap: 1.5rem;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.exportCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+  border-color: var(--primary);
+}
+
+.exportCard h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.exportCard p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Removed empty styles */
