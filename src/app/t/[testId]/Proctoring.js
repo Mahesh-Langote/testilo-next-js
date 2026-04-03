@@ -5,6 +5,7 @@ import { ShieldAlert } from 'lucide-react';
 
 export default function Proctoring({ onViolation }) {
   const [switches, setSwitches] = useState(0);
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -12,6 +13,7 @@ export default function Proctoring({ onViolation }) {
         setSwitches(s => {
           const newS = s + 1;
           if (onViolation) onViolation(newS);
+          setShowPopup(true);
           return newS;
         });
       }
@@ -21,37 +23,62 @@ export default function Proctoring({ onViolation }) {
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
   }, [onViolation]);
 
-  if (switches === 0) return null;
+  if (!showPopup) return null;
 
   return (
-    <div className="proctoring-warning card glass">
-      <ShieldAlert color="var(--error)" />
-      <div>
-        <p><strong>Warning:</strong> Tab switching detected ({switches})</p>
-        <p className="subtext">Your instructor has been notified of this activity.</p>
+    <div className="proctoring-overlay">
+      <div className="proctoring-modal card glass">
+        <ShieldAlert color="var(--error)" size={48} />
+        <h2>Warning: Activity Detected!</h2>
+        <p>You have left the test environment or switched tabs <strong>({switches})</strong> times.</p>
+        <p className="subtext">Your instructor is being notified of this activity. Continuing to do so may result in your test being invalidated.</p>
+        <button className="btn-primary" onClick={() => setShowPopup(false)}>
+          I Understand, Return to Test
+        </button>
       </div>
       
       <style jsx>{`
-        .proctoring-warning {
+        .proctoring-overlay {
           position: fixed;
-          top: 1rem;
-          right: 1rem;
-          padding: 1rem 1.5rem;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: rgba(0, 0, 0, 0.75);
+          backdrop-filter: blur(4px);
           display: flex;
           align-items: center;
-          gap: 1rem;
-          background: rgba(255, 255, 255, 0.95);
-          border-left: 5px solid var(--error);
-          box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-          z-index: 1000;
-          animation: slideIn 0.3s ease-out;
+          justify-content: center;
+          z-index: 9999;
+          animation: fadeIn 0.2s ease-out;
         }
-        @keyframes slideIn {
-          from { transform: translateX(100%); opacity: 0; }
-          to { transform: translateX(0); opacity: 1; }
+        .proctoring-modal {
+          background: white;
+          padding: 3rem;
+          max-width: 500px;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 1.5rem;
+          border-top: 6px solid var(--error);
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
-        p { margin: 0; font-size: 0.9rem; }
-        .subtext { font-size: 0.75rem; color: #888; }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        h2 { margin: 0; color: var(--error); }
+        p { margin: 0; font-size: 1.1rem; line-height: 1.5; color: #333; }
+        .subtext { font-size: 0.95rem; color: #666; }
+        button {
+          margin-top: 1rem;
+          padding: 1rem 2rem;
+          font-weight: 600;
+          background-color: var(--error);
+          border: none;
+        }
+        button:hover { background-color: #c92a2a; }
       `}</style>
     </div>
   );
