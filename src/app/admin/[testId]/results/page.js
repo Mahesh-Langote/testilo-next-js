@@ -61,6 +61,7 @@ export default async function ResultsPage({ params }) {
                 <th>Student</th>
                 <th>Score</th>
                 <th>Percentage</th>
+                <th>Violations</th>
                 <th>Duration</th>
                 <th>Finished</th>
                 <th>Actions</th>
@@ -80,6 +81,7 @@ export default async function ResultsPage({ params }) {
                       <span>{sub.percentage.toFixed(1)}%</span>
                     </div>
                   </td>
+                  <td>{sub.violations || 0}</td>
                   <td>{Math.floor(sub.timeTaken / 60)}m {Math.floor(sub.timeTaken % 60)}s</td>
                   <td>{new Date(sub.timeEnded).toLocaleString()}</td>
                   <td className={styles.actionsCell}>

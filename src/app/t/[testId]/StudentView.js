@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Play, ShieldAlert } from 'lucide-react';
 import { submitTest } from '../submission-actions';
 import Proctoring from './Proctoring';
@@ -11,6 +11,29 @@ export default function StudentView({ test, testId }) {
   const [answers, setAnswers] = useState({});
   const [startTime, setStartTime] = useState(null);
   const [violations, setViolations] = useState(0);
+
+  useEffect(() => {
+    if (step !== 'taking') return;
+
+    const preventDefault = (e) => e.preventDefault();
+    
+    if (test.settings.browser?.disableRightClick) {
+      document.addEventListener('contextmenu', preventDefault);
+    }
+    
+    if (test.settings.browser?.disableCopyPaste) {
+      document.addEventListener('copy', preventDefault);
+      document.addEventListener('cut', preventDefault);
+      document.addEventListener('paste', preventDefault);
+    }
+
+    return () => {
+      document.removeEventListener('contextmenu', preventDefault);
+      document.removeEventListener('copy', preventDefault);
+      document.removeEventListener('cut', preventDefault);
+      document.removeEventListener('paste', preventDefault);
+    };
+  }, [step, test.settings.browser]);
 
   const handleStart = () => {
     if (test.settings.access.mode === 'passcode' && studentInfo.passcode !== test.settings.access.passcode) {
@@ -27,7 +50,12 @@ export default function StudentView({ test, testId }) {
 
   const handleSubmit = async () => {
     if (confirm('Are you sure you want to submit your test?')) {
-      await submitTest(testId, { ...studentInfo, startTime, violations }, answers);
+      try {
+        await submitTest(testId, { ...studentInfo, startTime, violations }, answers);
+      } catch (error) {
+        console.error(error);
+        alert('Failed to submit test: ' + error.message);
+      }
     }
   };
 
@@ -81,7 +109,9 @@ export default function StudentView({ test, testId }) {
 
   return (
     <div className="taking-step">
-      <Proctoring onViolation={(count) => setViolations(count)} />
+      {test.settings.browser?.proctoring && (
+        <Proctoring onViolation={(count) => setViolations(count)} />
+      )}
       <div className="test-header">
         <div className="timer">
           {/* Simple timer component could go here */}

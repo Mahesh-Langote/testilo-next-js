@@ -132,6 +132,7 @@ export default async function SettingsPage({ params }) {
         <section className={`${styles.settingsSection} card`}>
           <h2>Browser Functionality</h2>
           <div className={styles.checkboxList}>
+            <label><input type="checkbox" name="proctoring" defaultChecked={test.settings?.browser?.proctoring} /> Enable proctoring (prevent tab switching)</label>
             <label><input type="checkbox" name="disableRightClick" defaultChecked={test.settings?.browser?.disableRightClick} /> Disable right-click context menu</label>
             <label><input type="checkbox" name="disableCopyPaste" defaultChecked={test.settings?.browser?.disableCopyPaste} /> Disable copy/paste</label>
           </div>

@@ -25,7 +25,7 @@ export async function submitTest(testId, studentData, answers) {
     } else if (q.type === 'multiple-response') {
       // Array intersection logic
       isCorrect = Array.isArray(studentAnswer) && 
-                  studentAnswer.sort().join(',') === q.correctAnswer.sort().join(',');
+                  studentAnswer.sort().join(',') === (Array.isArray(q.correctAnswer) ? q.correctAnswer : []).sort().join(',');
     } else if (q.type === 'fill-in-blank' || q.type === 'numeric') {
       isCorrect = studentAnswer?.toString().toLowerCase().trim() === 
                   q.correctAnswer?.toString().toLowerCase().trim();
@@ -35,10 +35,10 @@ export async function submitTest(testId, studentData, answers) {
       score = q.points;
       totalScore += score;
     } else {
-      totalScore -= (test.settings.negativeMarking || 0);
+      totalScore -= (test.settings?.negativeMarking || 0);
     }
     
-    maxPossibleScore += q.points;
+    maxPossibleScore += q.points || 0;
     
     return {
       questionId: q._id,
@@ -48,7 +48,7 @@ export async function submitTest(testId, studentData, answers) {
     };
   });
 
-  const percentage = (totalScore / maxPossibleScore) * 100;
+  const percentage = maxPossibleScore > 0 ? (totalScore / maxPossibleScore) * 100 : 0;
 
   const submission = await Submission.create({
     testId,
@@ -61,7 +61,8 @@ export async function submitTest(testId, studentData, answers) {
     timeStarted: studentData.startTime,
     timeEnded: new Date(),
     timeTaken: (new Date() - new Date(studentData.startTime)) / 1000,
-    status: 'submitted'
+    status: 'submitted',
+    violations: studentData.violations || 0
   });
 
   redirect(`/t/${testId}/review/${submission._id}`);

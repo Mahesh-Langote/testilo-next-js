@@ -22,6 +22,8 @@ const SubmissionSchema = new mongoose.Schema({
   
   status: { type: String, default: 'submitted', enum: ['in-progress', 'submitted', 'abandoned'] },
   
+  violations: { type: Number, default: 0 },
+  
   metadata: {
     ip: { type: String },
     userAgent: { type: String }

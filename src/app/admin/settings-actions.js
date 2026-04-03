@@ -36,7 +36,8 @@ export async function updateTestSettings(testId, formData) {
       
       browser: {
         disableRightClick: formData.get('disableRightClick') === 'on',
-        disableCopyPaste: formData.get('disableCopyPaste') === 'on'
+        disableCopyPaste: formData.get('disableCopyPaste') === 'on',
+        proctoring: formData.get('proctoring') === 'on'
       }
     },
     updatedAt: new Date()

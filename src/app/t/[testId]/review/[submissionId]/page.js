@@ -1,7 +1,7 @@
 import dbConnect from '@/lib/db';
 import Test from '@/models/Test';
 import Submission from '@/models/Submission';
-import { CheckCircle, XCircle, Clock, Trophy } from 'lucide-react';
+import { CheckCircle, XCircle, Clock, Trophy, User, ShieldAlert } from 'lucide-react';
 import styles from '../../../review.module.css';
 
 export default async function ReviewPage({ params }) {
@@ -29,9 +29,23 @@ export default async function ReviewPage({ params }) {
         
         <div className={styles.summaryMeta}>
           <div className={styles.metaItem}>
+            <User size={18} />
+            <span>Participant: {submission.studentName} {submission.studentIdentifier ? `(${submission.studentIdentifier})` : ''}</span>
+          </div>
+          <div className={styles.metaItem}>
             <Clock size={18} />
             <span>Time Taken: {Math.floor(submission.timeTaken / 60)}m {Math.floor(submission.timeTaken % 60)}s</span>
           </div>
+          {(submission.violations > 0 || test.settings?.browser?.proctoring) && (
+            <div className={styles.metaItem}>
+              <ShieldAlert size={18} color={submission.violations > 0 ? "var(--error)" : "#10b981"} />
+              <span style={{ color: submission.violations > 0 ? 'var(--error)' : '#10b981' }}>
+                {submission.violations > 0 
+                  ? `Activity Warnings: ${submission.violations} time(s) (Tab/Window Switching)` 
+                  : 'Proctoring: Clear (No switching detected)'}
+              </span>
+            </div>
+          )}
         </div>
 
         {review.conclusionText && (

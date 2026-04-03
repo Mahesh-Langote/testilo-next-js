@@ -57,7 +57,8 @@ const TestSchema = new mongoose.Schema({
     
     browser: {
       disableRightClick: { type: Boolean, default: false },
-      disableCopyPaste: { type: Boolean, default: false }
+      disableCopyPaste: { type: Boolean, default: false },
+      proctoring: { type: Boolean, default: false }
     }
   },
   
