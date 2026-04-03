@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Play, ShieldAlert } from 'lucide-react';
 import { submitTest } from '../submission-actions';
 import Proctoring from './Proctoring';
+import { useRouter } from 'next/navigation';
 
 export default function StudentView({ test, testId }) {
   const [step, setStep] = useState('welcome'); // welcome, taking, reviewing
@@ -11,6 +12,8 @@ export default function StudentView({ test, testId }) {
   const [answers, setAnswers] = useState({});
   const [startTime, setStartTime] = useState(null);
   const [violations, setViolations] = useState(0);
+
+  const router = useRouter();
 
   useEffect(() => {
     if (step !== 'taking') return;
@@ -48,15 +51,32 @@ export default function StudentView({ test, testId }) {
     setStartTime(new Date());
   };
 
-  const handleSubmit = async () => {
-    if (confirm('Are you sure you want to submit your test?')) {
-      try {
-        await submitTest(testId, { ...studentInfo, startTime, violations }, answers);
-      } catch (error) {
-        console.error(error);
-        alert('Failed to submit test: ' + error.message);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  const executeSubmit = async () => {
+    setIsSubmitting(true);
+    setSubmitError(null);
+    try {
+      const result = await submitTest(testId, { ...studentInfo, startTime, violations }, answers);
+      if (result?.success) {
+        router.push(`/t/${testId}/review/${result.submissionId}`);
+      } else {
+        setSubmitError(result?.error || 'Failed to submit test. Please try again.');
+        setIsSubmitting(false);
+        setShowConfirm(false);
       }
+    } catch (error) {
+      console.error(error);
+      setSubmitError(error.message || 'An unexpected error occurred during submission.');
+      setIsSubmitting(false);
+      setShowConfirm(false);
     }
+  };
+
+  const handleSubmitClick = () => {
+    setShowConfirm(true);
   };
 
   if (step === 'welcome') {
@@ -153,21 +173,60 @@ export default function StudentView({ test, testId }) {
       </div>
       
       <div className="test-actions">
-        <button onClick={handleSubmit} className="btn-primary submit-btn">Submit Test</button>
+        {submitError && (
+          <div className="submit-error" style={{ color: 'var(--error)', marginBottom: '1rem', textAlign: 'center', fontWeight: '500' }}>
+            <ShieldAlert size={20} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '8px' }} />
+            {submitError}
+          </div>
+        )}
+        
+        {!showConfirm ? (
+          <button 
+            onClick={handleSubmitClick} 
+            className="btn-primary submit-btn" 
+          >
+            Submit Test
+          </button>
+        ) : (
+          <div className="confirm-container card">
+            <h3 style={{ marginBottom: '1rem', color: 'var(--text-dark)' }}>Ready to submit?</h3>
+            <p style={{ color: '#475569', marginBottom: '1.5rem' }}>Make sure you have answered all questions. You cannot change your answers after submission.</p>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+              <button 
+                onClick={() => setShowConfirm(false)} 
+                className="btn-secondary"
+                disabled={isSubmitting}
+                style={{ background: '#E2E8F0', padding: '12px 24px', borderRadius: '10px', color: '#475569', fontWeight: '600' }}
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={executeSubmit} 
+                className="btn-primary" 
+                disabled={isSubmitting}
+                style={{ opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? 'wait' : 'pointer', padding: '12px 32px' }}
+              >
+                {isSubmitting ? 'Submitting...' : 'Yes, Submit Test'}
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       <style jsx>{`
         .taking-step { max-width: 800px; margin: 0 auto; }
         .questions-list { display: flex; flex-direction: column; gap: 2rem; }
-        .question-card { padding: 2rem; }
-        .q-label { font-weight: 800; color: #888; margin-bottom: 0.5rem; }
-        .q-text { font-size: 1.2rem; font-weight: 600; margin-bottom: 1.5rem; }
+        .question-card { padding: 2.5rem; border-radius: 16px; border: 1px solid rgba(0,0,0,0.02); }
+        .q-label { font-weight: 800; color: #94A3B8; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.85rem; }
+        .q-text { font-size: 1.25rem; font-weight: 600; color: var(--text-dark); margin-bottom: 2rem; line-height: 1.6; }
         .q-options { display: flex; flex-direction: column; gap: 1rem; }
-        .opt-label { display: flex; align-items: center; gap: 0.75rem; padding: 12px; border: 1px solid #eee; border-radius: 8px; cursor: pointer; transition: background 0.2s; }
-        .opt-label:hover { background: #f9f9f9; }
-        .opt-label input { width: 18px; height: 18px; }
-        .test-actions { margin-top: 3rem; display: flex; justify-content: center; }
-        .submit-btn { padding: 15px 50px; font-size: 1.25rem; }
+        .opt-label { display: flex; align-items: center; gap: 1rem; padding: 16px 20px; border: 1px solid var(--border-color); border-radius: 12px; cursor: pointer; transition: all 0.2s; background: white; font-weight: 500; color: #475569; }
+        .opt-label:hover { border-color: var(--primary); background: #F5F3FF; }
+        .opt-label input { width: 20px; height: 20px; accent-color: var(--primary); }
+        .test-actions { margin-top: 4rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; margin-bottom: 4rem; text-align: center; }
+        .submit-btn { padding: 16px 64px; font-size: 1.25rem; box-shadow: 0 10px 25px rgba(124, 58, 237, 0.25); }
+        .confirm-container { border: 2px solid var(--primary); max-width: 500px; animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
       `}</style>
     </div>
   );

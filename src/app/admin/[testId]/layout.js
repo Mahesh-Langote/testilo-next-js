@@ -18,7 +18,10 @@ export default async function AdminLayout({ children, params }) {
       <aside className={styles.sidebar}>
         <div className={styles.sidebarLogo}>
           <Link href="/">
-            <h2 className={styles.logoText}>Testmoz</h2>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <img src="/logo.png" alt="Testilo Logo" style={{ height: '32px', width: 'auto' }} />
+              <h2 className={styles.logoText} style={{ margin: 0 }}>Testilo</h2>
+            </div>
           </Link>
         </div>
         

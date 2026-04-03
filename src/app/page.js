@@ -7,7 +7,10 @@ export default function Home() {
       <header className={styles.header}>
         <div className="container">
           <nav className={styles.nav}>
-            <h2 className={styles.logo}>Exam平台</h2>
+            <div className={styles.logoWrapper} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <img src="/logo.png" alt="Testilo Logo" style={{ height: '32px', width: 'auto' }} />
+              <h2 className={styles.logo} style={{ margin: 0 }}>Testilo</h2>
+            </div>
             <div className={styles.navLinks}>
               <a href="#">Pricing</a>
               <a href="#">FAQ</a>
@@ -44,7 +47,7 @@ export default function Home() {
             
             <div className="hero-image">
               <div className="screenshot-mockup card" style={{ height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <span style={{ color: '#ccc', fontStyle: 'italic' }}>TestMoz-like Dashboard Mockup</span>
+                <span style={{ color: '#ccc', fontStyle: 'italic' }}>Testilo Dashboard Mockup</span>
               </div>
             </div>
           </div>
@@ -53,7 +56,7 @@ export default function Home() {
 
       <footer className={styles.footer}>
         <div className="container">
-          <p>© 2026 TestMoz Clone. All rights reserved.</p>
+          <p>© 2026 Testilo. All rights reserved.</p>
         </div>
       </footer>
     </div>

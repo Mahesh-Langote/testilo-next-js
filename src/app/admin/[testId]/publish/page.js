@@ -66,7 +66,7 @@ export default async function PublishPage({ params }) {
 
       <section className={styles.exportSection}>
         <h2>Export / Print</h2>
-        <p>Testmoz tests are meant to be taken online. But if you need a paper copy, you can print one here.</p>
+        <p>Testilo tests are meant to be taken online. But if you need a paper copy, you can print one here.</p>
         
         <div className={styles.exportGrid}>
           <div className={`${styles.exportCard} card`}>

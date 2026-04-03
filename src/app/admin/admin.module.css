@@ -5,62 +5,76 @@
 }
 
 .sidebar {
-  width: 250px;
-  background-color: var(--bg-dark);
+  width: 260px;
+  background: var(--bg-dark);
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.05);
   color: white;
   display: flex;
   flex-direction: column;
   position: sticky;
   top: 0;
   height: 100vh;
+  z-index: 40;
 }
 
 .sidebarLogo {
-  padding: 2rem;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding: 2rem 1.5rem;
 }
 
 .logoText {
-  color: var(--primary);
+  color: var(--text-light);
   font-weight: 800;
-  letter-spacing: -1px;
+  letter-spacing: -0.5px;
+  font-size: 1.5rem;
 }
 
 .sidebarNav {
-  padding: 1rem 0;
+  padding: 0 1rem;
   flex: 1;
 }
 
 .sidebarNav ul {
   list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .navItem {
   display: flex;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
   gap: 12px;
-  transition: all 0.2s;
-  color: rgba(255,255,255,0.7);
+  transition: all 0.2s ease;
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 500;
+  font-size: 0.95rem;
 }
 
 .navItem:hover {
-  background-color: rgba(255,255,255,0.05);
+  background-color: var(--bg-dark-accent);
   color: white;
+  transform: translateX(4px);
 }
 
 .navItem.active {
   background-color: var(--primary);
   color: white;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
 }
 
 .sidebarFooter {
-  border-top: 1px solid rgba(255,255,255,0.1);
-  padding: 1rem 0;
+  padding: 1.5rem 1rem;
 }
 
 .logout {
-  color: #ff4757;
+  color: #FCA5A5;
+}
+
+.logout:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #EF4444;
 }
 
 .adminContent {
@@ -70,20 +84,27 @@
 }
 
 .adminHeader {
-  background: white;
-  padding: 1rem 2rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  padding: 1.5rem 2.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 30;
 }
 
 .contentInner {
-  padding: 2rem;
+  padding: 2.5rem;
   flex: 1;
+  max-width: 1400px;
 }
 
 .testName {
   font-weight: 600;
-  color: #666;
+  color: var(--text-dark);
+  font-size: 1.1rem;
 }
