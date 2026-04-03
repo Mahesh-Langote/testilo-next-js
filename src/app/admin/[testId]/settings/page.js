@@ -1,10 +1,12 @@
 import dbConnect from '@/lib/db';
 import Test from '@/models/Test';
+import { requireTestOwner } from '@/lib/auth';
 import { updateTestSettings } from '../../settings-actions';
 import styles from './settings.module.css';
 
 export default async function SettingsPage({ params }) {
   const { testId } = await params;
+  await requireTestOwner(testId);
   
   await dbConnect();
   const test = await Test.findById(testId).lean();

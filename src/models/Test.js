@@ -27,7 +27,8 @@ const QuestionSchema = new mongoose.Schema({
 
 const TestSchema = new mongoose.Schema({
   title: { type: String, required: true },
-  adminPassword: { type: String, required: true }, // Simple password for dashboard
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // Tied to a specific admin user
+  adminPassword: { type: String }, // Legacy field for older tests
   introduction: { type: String, default: '' },
   theme: { type: String, default: 'default' }, // TestMoz has colors like 'corporate', 'crimson'
   language: { type: String, default: 'en' },

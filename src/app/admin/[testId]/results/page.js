@@ -1,11 +1,13 @@
 import dbConnect from '@/lib/db';
 import Test from '@/models/Test';
+import { requireTestOwner } from '@/lib/auth';
 import Submission from '@/models/Submission';
 import { User, Clock, FileText, Download, Trash2 } from 'lucide-react';
 import styles from './results.module.css';
 
 export default async function ResultsPage({ params }) {
   const { testId } = await params;
+  await requireTestOwner(testId);
   
   await dbConnect();
   const test = await Test.findById(testId).lean();

@@ -6,11 +6,39 @@ import {
   HelpCircle, 
   Send, 
   BarChart3, 
-  LogOut 
+  LogOut,
+  ArrowLeft
 } from 'lucide-react';
+
+import { getSession } from '@/lib/auth';
+import dbConnect from '@/lib/db';
+import Test from '@/models/Test';
+import { redirect } from 'next/navigation';
 
 export default async function AdminLayout({ children, params }) {
   const { testId } = await params;
+  
+  const session = await getSession();
+  if (!session) {
+    redirect('/login');
+  }
+
+  await dbConnect();
+  try {
+    const test = await Test.findById(testId);
+    if (!test) {
+      redirect('/admin/dashboard');
+    }
+    
+    // Check if the current user owns this test
+    // Legacy tests might have adminPassword but no owner. If strict mode is desired, 
+    // we block them or we adapt. For now, strictly require owner match.
+    if (test.owner?.toString() !== session.userId) {
+      redirect('/admin/dashboard'); // Unauthorized
+    }
+  } catch (error) {
+    redirect('/admin/dashboard');
+  }
 
   return (
     <div className={styles.adminLayout}>
@@ -27,6 +55,11 @@ export default async function AdminLayout({ children, params }) {
         
         {/* Navigation */}
         <nav className={styles.sidebarNav}>
+          <div style={{ padding: '0 1rem 1rem 1rem', borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: '1rem' }}>
+            <Link href="/admin/dashboard" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#94A3B8', fontSize: '0.9rem', textDecoration: 'none', fontWeight: 500 }}>
+              <ArrowLeft size={16} /> All Tests
+            </Link>
+          </div>
           <ul>
             <li>
               <Link href={`/admin/${testId}`}>

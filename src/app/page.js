@@ -1,5 +1,6 @@
 import { createTest } from './actions';
 import styles from './page.module.css';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -25,23 +26,15 @@ export default function Home() {
           <div className={styles.heroGrid}>
             <div className={styles.heroText}>
               <h1>Build a Test in Seconds</h1>
-              <p>The simplest way to create and grade assessments. No signup required to start building.</p>
+              <p>The simplest way to create and grade assessments. Join to start building your tests.</p>
               
-              <div className="card glass">
-                <form action={createTest}>
-                  <div className="input-group">
-                    <label htmlFor="title">Test Name</label>
-                    <input type="text" id="title" name="title" placeholder="e.g. History Mid-Term" required />
-                  </div>
-                  <div className="input-group">
-                    <label htmlFor="password">Admin Password</label>
-                    <input type="password" id="password" name="password" placeholder="Don't lose this!" required />
-                    <small className={styles.small}>You'll need this to manage your test later.</small>
-                  </div>
-                  <button type="submit" className="btn-primary" style={{ width: '100%' }}>
-                    Build Test
-                  </button>
-                </form>
+              <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
+                <Link href="/register" className="btn-primary" style={{ padding: '16px 32px', fontSize: '1.1rem' }}>
+                  Get Started for Free
+                </Link>
+                <Link href="/login" className="btn-secondary" style={{ padding: '16px 32px', fontSize: '1.1rem', background: 'transparent' }}>
+                  Login to Dashboard
+                </Link>
               </div>
             </div>
             

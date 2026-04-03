@@ -8,12 +8,14 @@ import {
   Trash2, 
   Lock 
 } from 'lucide-react';
+import { requireTestOwner } from '@/lib/auth';
 import dbConnect from '@/lib/db';
 import Test from '@/models/Test';
 import styles from '../dashboard.module.css';
 
 export default async function DashboardPage({ params }) {
   const { testId } = await params;
+  await requireTestOwner(testId);
   
   await dbConnect();
   const test = await Test.findById(testId).lean();

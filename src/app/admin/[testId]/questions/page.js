@@ -1,10 +1,12 @@
 import dbConnect from '@/lib/db';
 import Test from '@/models/Test';
+import { requireTestOwner } from '@/lib/auth';
 import QuestionList from './QuestionList';
 import styles from './questions.module.css';
 
 export default async function QuestionsPage({ params }) {
   const { testId } = await params;
+  await requireTestOwner(testId);
   
   await dbConnect();
   const test = await Test.findById(testId).lean();
