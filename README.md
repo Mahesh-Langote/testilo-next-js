@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Testilo Web
 
-## Getting Started
+Testilo is a Next.js web app for creating, publishing, and grading online assessments with optional proctoring checks.
 
-First, run the development server:
+This repository includes:
+
+- Admin workflow to create and manage tests
+- Student test-taking flow
+- Authentication with JWT + HTTP-only cookies
+- MongoDB persistence with Mongoose models
+- Result tracking and review pages
+
+## Tech Stack
+
+- Next.js 16 (App Router)
+- React 19
+- MongoDB + Mongoose
+- JWT auth (`jsonwebtoken`)
+- Password hashing (`bcryptjs`)
+- Icons (`lucide-react`)
+
+## Prerequisites
+
+- Node.js 20+
+- npm 10+
+- MongoDB instance (local or cloud)
+
+## Local Setup
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Create `.env.local` in the project root:
+
+```env
+MONGODB_URI=mongodb://localhost:27017/testmoz-clone
+JWT_SECRET=replace_with_a_long_random_secret
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+```
+
+3. Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```text
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Scripts
 
-## Learn More
+- `npm run dev`: Start development server
+- `npm run build`: Create production build
+- `npm run start`: Start production server
+- `npm run lint`: Run ESLint checks
 
-To learn more about Next.js, take a look at the following resources:
+## Main Routes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `/`: Marketing / landing page
+- `/register`: Create admin account
+- `/login`: Sign in
+- `/admin/dashboard`: Admin home, test list
+- `/admin/[testId]/questions`: Question builder
+- `/admin/[testId]/settings`: Test behavior and access settings
+- `/admin/[testId]/publish`: Publish/unpublish and sharing link
+- `/admin/[testId]/results`: Submission results
+- `/t/[testId]`: Student test-taking page
+- `/t/[testId]/review/[submissionId]`: Student review page
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Data Model Overview
 
-## Deploy on Vercel
+- `User`: Admin identity and hashed password
+- `Test`: Metadata, settings, and question set
+- `Submission`: Student answers, scores, timing, and proctoring violation count
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Authentication and Access
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- A JWT token is issued on login/registration and stored in an HTTP-only cookie (`testilo_token`).
+- Middleware protects `/admin/*` routes from anonymous access.
+- Server-side ownership checks ensure only a test owner can manage a test.
+
+## Deployment Notes
+
+- Set all environment variables in your deployment environment.
+- Ensure `NEXT_PUBLIC_BASE_URL` points to your deployed domain.
+- Run `npm run build` before `npm run start`.
+
+## Project Structure (Top Level)
+
+```text
+src/
+	app/
+		admin/
+		login/
+		register/
+		t/
+	lib/
+		auth.js
+		db.js
+	models/
+		Submission.js
+		Test.js
+		User.js
+```
